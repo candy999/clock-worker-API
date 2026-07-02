@@ -1,9 +1,4 @@
-name = "clock-worker"
+name = "clock-api"
 main = "src/index.js"
 compatibility_date = "2024-05-12"
-workers_dev = true
-
-# 讓 Worker 能夠將 .html 檔案作為字串匯入
-rules = [
-  { type = "Text", globs = ["**/*.html"], fallbacks = [] }
-]
+workers_dev = false # 我們將使用自訂網域
