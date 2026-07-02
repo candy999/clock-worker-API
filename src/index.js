@@ -1,19 +1,23 @@
-import htmlContent from './index.html';
+// 統一設定 CORS 標頭，為了安全，只允許你的前端網域存取
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "https://time.candy.moe", // 嚴格限制來源
+  "Access-Control-Allow-Methods": "GET, HEAD, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
 
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
-    // 1. 提供前端 HTML 介面
-    if (url.pathname === '/') {
-      return new Response(htmlContent, {
-        headers: { 'Content-Type': 'text/html;charset=UTF-8' },
+    // ★ 處理 CORS 預檢請求 (Preflight Request)
+    // 當瀏覽器發送跨網域請求前，會先發一個 OPTIONS 請求確認伺服器是否允許
+    if (request.method === "OPTIONS") {
+      return new Response(null, {
+        headers: corsHeaders
       });
     }
 
-    // 2. API: 獲取標準時間
-    // Cloudflare Edge 節點與 Stratum-1 NTP 伺服器保持高精度同步
-    // 因此 Worker 的 Date.now() 已經是極高精準度的標準時間
+    // API 1: 獲取標準時間
     if (url.pathname === '/api/time') {
       const serverTime = Date.now();
       return new Response(JSON.stringify({
@@ -22,16 +26,17 @@ export default {
       }), {
         headers: {
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
+          ...corsHeaders // 附加 CORS 標頭
         }
       });
     }
 
-    // 3. API: 搶票模式代理 (Proxy Time)
-    // 用於獲取售票網站的 Date 標頭，突破 CORS 限制
+    // API 2: 搶票模式代理 (Proxy Time)
     if (url.pathname === '/api/proxy-time') {
       const targetUrl = url.searchParams.get('url');
-      if (!targetUrl) return new Response('Missing URL', { status: 400 });
+      if (!targetUrl) {
+        return new Response('Missing URL', { status: 400, headers: corsHeaders });
+      }
 
       const start = Date.now();
       try {
@@ -50,18 +55,25 @@ export default {
         return new Response(JSON.stringify({
           status: 'success',
           targetTime: targetTime,
-          rtt: end - start // Worker 到售票網站的延遲
+          rtt: end - start
         }), {
           headers: {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
+            ...corsHeaders // 附加 CORS 標頭
           }
         });
       } catch (err) {
-        return new Response(JSON.stringify({ status: 'error', message: err.message }), { status: 500 });
+        return new Response(JSON.stringify({ status: 'error', message: err.message }), { 
+          status: 500, 
+          headers: { 'Content-Type': 'application/json', ...corsHeaders } 
+        });
       }
     }
 
-    return new Response('Not found', { status: 404 });
+    // 找不到路由
+    return new Response(JSON.stringify({ error: 'Not found' }), { 
+      status: 404, 
+      headers: { 'Content-Type': 'application/json', ...corsHeaders } 
+    });
   }
 };
