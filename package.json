@@ -1,0 +1,12 @@
+{
+  "name": "high-precision-clock",
+  "version": "1.0.0",
+  "description": "High-Precision Web Clock & Ticket Snatching Tool",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}
