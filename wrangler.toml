@@ -2,3 +2,7 @@ name = "clock-api"
 main = "src/index.js"
 compatibility_date = "2024-05-12"
 workers_dev = false # 我們將使用自訂網域
+
+# 選用設定：覆寫程式內建的預設值（逗號分隔）
+# [vars]
+# ALLOWED_ORIGINS = "https://time.candy.moe"
