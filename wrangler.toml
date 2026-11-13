@@ -1,7 +1,13 @@
 name = "clock-api"
 main = "src/index.js"
 compatibility_date = "2024-05-12"
-workers_dev = false # 我們將使用自訂網域
+workers_dev = false # 我們將使用自訂網域（只想先試用可改成 true，會得到 *.workers.dev 網址）
+
+# 自訂網域：可以在這裡設定，或部署後到 Dashboard → Settings → Domains & Routes 新增。
+# 網域必須已託管在 Cloudflare。
+# routes = [
+#   { pattern = "api.time.candy.moe", custom_domain = true }
+# ]
 
 # 選用設定：覆寫程式內建的預設值（逗號分隔）
 # [vars]

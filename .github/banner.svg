@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="400" viewBox="0 0 1280 400" role="img" aria-label="clock-api — Cloudflare Worker 對時 API">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d0d0f"/>
+      <stop offset="1" stop-color="#1f150c"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1280" height="400" fill="url(#bg)"/>
+  <rect width="1280" height="400" fill="url(#grid)"/>
+  <rect x="0" y="0" width="1280" height="6" fill="#f6821f"/>
+
+  <!-- 左：標題 -->
+  <g font-family="-apple-system,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif">
+    <text x="80" y="150" font-family="'SFMono-Regular','Cascadia Mono','Courier New',Courier,monospace" font-size="84" font-weight="700" fill="#f6821f">clock-api</text>
+    <text x="82" y="200" font-size="28" font-weight="600" fill="#e0e0e0">高精度對時 API · Cloudflare Worker</text>
+    <text x="82" y="240" font-size="20" fill="#9a9a9a">用「秒邊界夾擠法」量出任何網站的伺服器時鐘</text>
+  </g>
+
+  <g font-family="'SFMono-Regular','Cascadia Mono','Courier New',Courier,monospace" font-size="20">
+    <rect x="80" y="282" width="260" height="40" rx="8" fill="#00e676" fill-opacity="0.12" stroke="#00e676" stroke-opacity="0.5"/>
+    <text x="98" y="308" fill="#7ff2b9">GET /api/time</text>
+    <rect x="356" y="282" width="330" height="40" rx="8" fill="#ff1744" fill-opacity="0.12" stroke="#ff1744" stroke-opacity="0.5"/>
+    <text x="374" y="308" fill="#ff8a9e">GET /api/proxy-time</text>
+  </g>
+
+  <!-- 右：夾擠示意 -->
+  <g transform="translate(790,80)" font-family="'SFMono-Regular','Courier New',monospace">
+    <text x="0" y="0" font-size="16" fill="#777">offset ∈ [D − t₂, D + 1000 − t₁]</text>
+    <g stroke-linecap="round">
+      <line x1="0" y1="40"  x2="400" y2="40"  stroke="#f6821f" stroke-opacity="0.25" stroke-width="10"/>
+      <line x1="60" y1="80" x2="330" y2="80" stroke="#f6821f" stroke-opacity="0.4" stroke-width="10"/>
+      <line x1="130" y1="120" x2="270" y2="120" stroke="#f6821f" stroke-opacity="0.6" stroke-width="10"/>
+      <line x1="170" y1="160" x2="235" y2="160" stroke="#f6821f" stroke-opacity="0.8" stroke-width="10"/>
+      <line x1="192" y1="200" x2="214" y2="200" stroke="#f6821f" stroke-width="10"/>
+    </g>
+    <line x1="203" y1="20" x2="203" y2="220" stroke="#e0e0e0" stroke-opacity="0.5" stroke-dasharray="4 6"/>
+    <text x="203" y="252" text-anchor="middle" font-size="22" fill="#e0e0e0">offset = +412 ms ± 9</text>
+  </g>
+
+  <text x="1252" y="386" text-anchor="end" font-family="'SFMono-Regular','Courier New',monospace" font-size="16" fill="#666">api.time.candy.moe</text>
+</svg>
